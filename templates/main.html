@@ -1,0 +1,54 @@
+<% if(ctx.oauth().hasPrivilegedAccess) { %>
+  <div id="toolbar">
+
+    <form id="selectRef">
+      <label for="releaseSelector">See this website: </label>
+      <select id="releaseSelector" name="ref">
+        <option value="" <% if(ctx.ref == ctx.api.data.master.ref) { %> selected="selected" <% } %> >As currently seen by guest visitors</option>
+        <optgroup label="Or preview the website in a future release:">
+        <% for(var i=0; i<ctx.api.data.refs.length; i++) { %>
+          <% if(!ctx.api.data.refs[i].isMaster) { %>
+            <option value="<%= ctx.api.data.refs[i].ref %>" <% if(ctx.ref == ctx.api.data.refs[i].ref) { %> selected="selected" <% } %>>As <%= ctx.api.data.refs[i].label %></option>
+          <% } %>
+        <% } %>
+        </optgroup>
+      </select>
+    </form>
+
+    <form id="signout">
+      <input type="submit" value="Disconnect">
+    </form>
+
+    <hr>
+
+  </div>
+<% } %>
+
+<header>
+  <nav>
+    <h1><a href="#<%= ctx.maybeRefParam %>">Les bonnes choses</a></h1>
+
+    <ul>
+      <li><a href="#about<%= ctx.maybeRefParam %>">About</a></li>
+      <li><a href="#stores<%= ctx.maybeRefParam %>">Stores</a></li>
+    </ul>
+    <ul>
+      <li><a href="#jobs<%= ctx.maybeRefParam %>">Jobs</a></li>
+      <li><a href="/blog/#<%= ctx.maybeRefParam %>" target="_self">Our Blog</a></li>
+    </ul>
+
+    <a href="#search<%= ctx.maybeRefParam %>"><span>Search</span></a>
+
+  </nav>
+</header>
+
+<div class="main">
+</div>
+
+<footer>
+  This is a demonstration website for <a href="http://prismic.io">prismic.io</a> 
+
+  <% if(!ctx.oauth().hasPrivilegedAccess) { %>
+    – Please <a href="#signin">sign in</a> to preview your changes.
+  <% } %>
+</footer>

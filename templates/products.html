@@ -1,0 +1,27 @@
+<section id="catalog">
+
+  <% if(this.title) { %> 
+    <h1><%= title %></h1>
+  <% } %>
+
+  <div class="products">
+  
+    <ul>
+      <% _.chain(products).sortBy(function(p) { return p.getText('product.name'); }).map(function(product) { %> 
+        <li data-category="<%= _.chain(product.tags).filter(function(t) { return _.chain(categories).keys().contains(t).value(); }).first().value() %>">
+          <a href="#products<%= ctx.maybeRefParam %>/<%= product.id %>/<%= product.slug %>">
+            <img src="<%= product.getImageView('product.image', 'icon').url %>">
+            <span><%= product.getText('product.name') %></span>
+            <em><%= numeral(product.getNumber('product.price')).format('$ 0,0[.]00') %></em>
+          </a>
+        </li>
+      <% }).value(); %>
+    </ul>
+
+  </div>
+
+  <p>
+    <a href="#<%= ctx.maybeRefParam %>">Close the products list</a>
+  </p>
+
+</section>

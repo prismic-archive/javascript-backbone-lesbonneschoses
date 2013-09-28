@@ -1,0 +1,80 @@
+<section id="caroussel">
+
+  <nav>
+    <ul>
+      <% _.each(_.values(categories), function(category) { %>
+        <li><a><%= category %></a></li>
+      <% }); %>
+    </ul>
+  </nav>
+
+  <div class="products">
+
+    <% _.each(_.keys(categories), function(category) { %>
+      <ul>
+        <% _.chain(products).filter(function(p) { return _(p.tags).contains(category); }).filter(function(p) { return !_(p.tags).contains("Featured"); }).take(5).map(function(product) { %>
+          <li data-category="<%= category %>">
+            <a href="#products<%= ctx.maybeRefParam %>/<%= product.id %>/<%= product.slug %>">
+              <img src="<%= product.getImageView('product.image', 'icon').url %>">
+              <span><%= product.getText('product.name') %></span>
+              <em><%= numeral(product.getNumber('product.price')).format('$ 0,0[.]00') %></em>
+            </a>
+          </li>
+        <% }).value(); %>
+      </ul>
+    <% }); %>
+
+  </div>
+
+  <p>
+    <a href="#products<%= ctx.maybeRefParam %>">Browse all our products</a>
+  </p>
+
+</section>
+
+<section id="featured">
+
+  <% _.chain(featured).filter(function(p) { return p.type != 'blog-post'; }).take(3).map(function(doc) { %>
+
+    <% if(doc.type == 'product') { %> 
+      <div style="background-image: url(<%= doc.getImageView('product.gallery', 'squared').url %>)">
+        <a href="#products<%= ctx.maybeRefParam %>/<%= doc.id %>/<%= doc.slug %>">
+          <h3><span><%= doc.getText('product.name') %></span></h3>
+          <p>
+            <span><%= doc.getText('product.short_lede') %></span>
+          </p>
+        </a>
+      </div>
+    <% } %>
+
+    <% if(doc.type == 'selection') { %> 
+      <div style="background-image: url(<%= doc.getImageView('selection.catcher_image', 'squarred').url %>)">
+        <a href="#selections<%= ctx.maybeRefParam %>/<%= doc.id %>/<%= doc.slug %>">
+          <h3><span><%= doc.getText('selection.name') %></span></h3>
+          <p>
+            <span><%= doc.getText('selection.short_lede') %></span>
+          </p>
+        </a>
+      </div>
+    <% } %>
+
+  <% }).value(); %>
+
+</section>
+
+<% _.chain(featured).filter(function(p) { return p.type == 'blog-post'; }).take(1).map(function(post) { %>
+  
+  <section id="blog">
+
+    <h2>Fresh news from <a href="/blog/#<%= ctx.maybeRefParam %>/">our blog</a></h2>
+
+    <a href="/blog/#posts<%= ctx.maybeRefParam %>/<%= post.id %>/<%= post.slug %>">
+      <h1><%= post.getStructuredText('blog-post.body').getTitle().text %></h1>
+      <p><%= post.getStructuredText('blog-post.body').getFirstParagraph().text %></p>
+    </a>
+
+    <a class="more" href="/blog/#posts<%= ctx.maybeRefParam %>/<%= post.id %>/<%= post.slug %>">Read more</a>
+
+  </section>
+
+<% }).value(); %>
