@@ -23,21 +23,20 @@
 <% } %>
 
 <header>
+
+  <a href="/#<%= ctx.maybeRefParam %>">
+    <h1>Les Bonnes Choses</h1>
+  </a>
+
   <nav>
-    <h1><a href="#<%= ctx.maybeRefParam %>">Les bonnes choses</a></h1>
-
     <ul>
-      <li><a href="#about<%= ctx.maybeRefParam %>">About</a></li>
-      <li><a href="#stores<%= ctx.maybeRefParam %>">Stores</a></li>
+      <li><a href="#<%= ctx.maybeRefParam %>">Home</a></li>
+      <% _(categories).map(function(category) { %> 
+        <li><a href="#categories<%= ctx.maybeRefParam %>/<%= category %>"><%= category %></a></li>
+      <% }); %>
     </ul>
-    <ul>
-      <li><a href="#jobs<%= ctx.maybeRefParam %>">Jobs</a></li>
-      <li><a href="/blog.html#<%= ctx.maybeRefParam %>" target="_self">Our Blog</a></li>
-    </ul>
-
-    <a href="#search<%= ctx.maybeRefParam %>"><span>Search</span></a>
-
   </nav>
+
 </header>
 
 <div class="main">
@@ -47,6 +46,6 @@
   This is a demonstration website for <a href="http://prismic.io">prismic.io</a> 
 
   <% if(!ctx.oauth().hasPrivilegedAccess) { %>
-    – Please <a href="#signin">sign in</a> to preview your changes.
+    – Please <a href="/#signin">sign in</a> to preview your changes.
   <% } %>
 </footer>

@@ -4,7 +4,7 @@ define([
 
  var Helpers = {
 
-    loadPage: function(id, htmlF) {
+    loadPage: function(id, htmlF, maybeHash) {
       if($('body > div.main').attr('id')) {
         return Helpers.scrollTop()
           .then(function() { 
@@ -17,7 +17,7 @@ define([
               $('body > div.main').attr('data-to', id).delay(250).promise().then(
                 function() {
                   $('body > div.main').attr('id', id).html(html).removeAttr('data-to')
-                  // TODO $('header nav a[href="' + loaded.selected + '"]').addClass('selected')
+                  $('header nav a[href="' + (maybeHash || document.location.hash) + '"]').addClass('selected')
                   if(setup) setup();
                   return html;
                 }
@@ -32,6 +32,7 @@ define([
       } else {
         htmlF(function(html, setup) {
           $('body > div.main').attr('id', id).html(html);
+          $('header nav a[href="' + (maybeHash || document.location.hash) + '"]').addClass('selected')
           if(setup) setup();
         });
       }

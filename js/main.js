@@ -8,7 +8,8 @@ require.config({
     text: 'vendor/text-0.27.0.min',
     modernizr: 'vendor/modernizr-2.6.2.min',
     catslider: 'vendor/catslider',
-    numeral: 'vendor/numeral-1.4.5.min'
+    numeral: 'vendor/numeral-1.4.5.min',
+    moment: 'vendor/moment-2.2.1.min'
   },
 
   shim: {
@@ -29,6 +30,10 @@ require.config({
 
 });
 
-require(['app'], function(App) {
-  App.run();
+require(['app', 'blog'], function(App, Blog) {
+  if(document.location.pathname.indexOf('blog') > 0) {
+    Blog.run();
+  } else {
+    App.run();
+  }
 });
