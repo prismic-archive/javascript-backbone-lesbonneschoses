@@ -328,7 +328,7 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
 
     }),
 
-    /** Select detail **/
+    /** Selection detail **/
     selectionDetail: Helpers.prismicRoute(function(ctx, id, slug) {
 
       Animations.loadPage('selection', function(html) {
