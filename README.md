@@ -34,7 +34,9 @@ git commit -a -m "Push to Github pages"
 git push origin gh-pages
 ```
 
-You can then visit your website at **http://_your-github-user_.github.io/javascript-backbone-lesbonneschoses**.
+You can then visit your website at:
+
+**http://_your-github-user_.github.io/javascript-backbone-lesbonneschoses**.
 
 ### Licence
 
