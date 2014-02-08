@@ -49,10 +49,14 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('home', function(html) {
 
         // Query the `products` collection
-        ctx.api.form('products').ref(ctx.ref).submit(function(products) {
+        ctx.api.form('products').ref(ctx.ref).submit(function(err, products) {
+
+          if (err) { Configuration.onPrismicError(err); return; }
 
           // Query the `featured` collection
-          ctx.api.form('featured').ref(ctx.ref).submit(function(featured) {
+          ctx.api.form('featured').ref(ctx.ref).submit(function(err, featured) {
+
+            if (err) { Configuration.onPrismicError(err); return; }
 
             // Update the page using the `Home` template
             html(
@@ -84,7 +88,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('products', function(html) {
 
         // Query the `products` collection
-        ctx.api.form('products').ref(ctx.ref).submit(function(products) {
+        ctx.api.form('products').ref(ctx.ref).submit(function(err, products) {
+
+          if (err) { Configuration.onPrismicError(err); return; }
           
           // Update the page using the `Products` template
           html(
@@ -114,7 +120,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('product', function(html) {
 
         // Get the document by Id
-        Helpers.getDocument(ctx, id, function(product) {
+        Helpers.getDocument(ctx, id, function(err, product) {
+
+          if (err) { Configuration.onPrismicError(err); return; }
 
           if(product) {
 
@@ -129,7 +137,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
               }).filter(function(link) { return link; })).value(), 
 
               // Then
-              function(relatedProducts) {
+              function(err, relatedProducts) {
+
+                if (err) { Configuration.onPrismicError(err); return; }
 
                 // Update the page using the `ProductDetail` template
                 html(
@@ -163,7 +173,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('about', function(html) {
 
         // Get the bookmarked document
-        Helpers.getBookmark(ctx, 'about', function(page) {
+        Helpers.getBookmark(ctx, 'about', function(err, page) {
+
+          if (err) { Configuration.onPrismicError(err); return; }
 
           // Update the page using the `About` template
           html(
@@ -185,9 +197,13 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('stores', function(html) {
 
         // Get the bookmarked document
-        Helpers.getBookmark(ctx, 'stores', function(page) {
+        Helpers.getBookmark(ctx, 'stores', function(err, page) {
 
-          ctx.api.form('stores').ref(ctx.ref).submit(function(stores) {
+          if (err) { Configuration.onPrismicError(err); return; }
+
+          ctx.api.form('stores').ref(ctx.ref).submit(function(err, stores) {
+
+            if (err) { Configuration.onPrismicError(err); return; }
 
             // Update the page using the `Stores` template
             html(
@@ -212,7 +228,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('store', function(html) {
 
         // Get the document by Id
-        Helpers.getDocument(ctx, id, function(store) {
+        Helpers.getDocument(ctx, id, function(err, store) {
+
+          if (err) { Configuration.onPrismicError(err); return; }
 
           // Update the page using the `StoreDetail` template
           html(
@@ -279,9 +297,13 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('jobs', function(html) {
 
         // Get the bookmarked document
-        Helpers.getBookmark(ctx, 'jobs', function(page) {
+        Helpers.getBookmark(ctx, 'jobs', function(err, page) {
 
-          ctx.api.form('jobs').ref(ctx.ref).submit(function(jobs) {
+          if (err) { Configuration.onPrismicError(err); return; }
+
+          ctx.api.form('jobs').ref(ctx.ref).submit(function(err, jobs) {
+
+            if (err) { Configuration.onPrismicError(err); return; }
 
             // Update the page using the `Jobs` template
             html(
@@ -306,10 +328,14 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('job', function(html) {
 
         // Get the bookmarked document
-        Helpers.getBookmark(ctx, 'jobs', function(page) {
+        Helpers.getBookmark(ctx, 'jobs', function(err, page) {
+
+          if (err) { Configuration.onPrismicError(err); return; }
 
           // Get the document by Id
-          Helpers.getDocument(ctx, id, function(job) {
+          Helpers.getDocument(ctx, id, function(err, job) {
+
+            if (err) { Configuration.onPrismicError(err); return; }
 
             // Update the page using the `JobDetail` template
             html(
@@ -334,7 +360,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('selection', function(html) {
 
         // Get the document by Id
-        Helpers.getDocument(ctx, id, function(selection) {
+        Helpers.getDocument(ctx, id, function(err, selection) {
+
+          if (err) { Configuration.onPrismicError(err); return; }
 
           if(selection) {
 
@@ -349,7 +377,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
               }).filter(function(link) { return link; })).value(), 
 
               // Then
-              function(products) {
+              function(err, products) {
+
+                if (err) { Configuration.onPrismicError(err); return; }
 
                 // Update the page using the `SelectionDetail` template
                 html(
@@ -394,7 +424,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
       Animations.loadPage('products', function(html) {
 
         // Query the `products` collection
-        ctx.api.form('everything').query('[[:d = at(my.product.flavour, "' + flavour + '")]]').ref(ctx.ref).submit(function(products) {
+        ctx.api.form('everything').query('[[:d = at(my.product.flavour, "' + flavour + '")]]').ref(ctx.ref).submit(function(err, products) {
+
+          if (err) { Configuration.onPrismicError(err); return; }
 
           // Update the page using the `Products` template
           html(
@@ -440,10 +472,14 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
         if(query) {
 
           // Search products
-          ctx.api.form('everything').query('[[:d = any(document.type, ["product", "selection"])][:d = fulltext(document, "' + query + '")]]').ref(ctx.ref).submit(function(products) {
+          ctx.api.form('everything').query('[[:d = any(document.type, ["product", "selection"])][:d = fulltext(document, "' + query + '")]]').ref(ctx.ref).submit(function(err, products) {
+
+            if (err) { Configuration.onPrismicError(err); return; }
 
             // Search others
-            ctx.api.form('everything').query('[[:d = any(document.type, ["article", "blog-post", "job-offer", "store"])][:d = fulltext(document, "' + query + '")]]').ref(ctx.ref).submit(function(others) {
+            ctx.api.form('everything').query('[[:d = any(document.type, ["article", "blog-post", "job-offer", "store"])][:d = fulltext(document, "' + query + '")]]').ref(ctx.ref).submit(function(err, others) {
+
+              if (err) { Configuration.onPrismicError(err); return; }
 
               // Update the page using the `Search` template
               html(
@@ -503,7 +539,8 @@ function($, _, Backbone, Prismic, Helpers, Configuration, PreviewToolbar, Templa
     signin: function() {
 
       // Retrieve the prismic API
-      Helpers.getApiHome(function(Api) {
+      Helpers.getApiHome(function(err, Api) {
+        if (err) { Configuration.onPrismicError(err); return; }
         document.location =
           Api.data.oauthInitiate + 
           '?response_type=token' +

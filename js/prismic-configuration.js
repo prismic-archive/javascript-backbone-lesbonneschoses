@@ -48,6 +48,11 @@ define(function() {
       }
 
       return '/#not-found';
+    },
+
+    // -- To customize: what to do when an error happens on the prismic.io side
+    onPrismicError: function(err) {
+      alert("An error happened on the server side: "+(err ? err.message : ''));
     }
 
   };

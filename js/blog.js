@@ -24,7 +24,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, Animations, PreviewToo
     /** Home page **/
     posts: Helpers.prismicRoute(function(ctx, category) {
 
-      ctx.api.form('blog').ref(ctx.ref).query(category ? '[[:d = at(my.blog-post.category, "' + category + '")]]' : '').submit(function(posts) {
+      ctx.api.form('blog').ref(ctx.ref).query(category ? '[[:d = at(my.blog-post.category, "' + category + '")]]' : '').submit(function(err, posts) {
+
+        if (err) { Configuration.onPrismicError(err); return; }
 
         $('.main').html(
           Templates.Posts({
@@ -41,7 +43,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, Animations, PreviewToo
     /** Post detail **/
     postDetail: Helpers.prismicRoute(function(ctx, id, slug) {
 
-     Helpers.getDocument(ctx, id, function(post) {
+     Helpers.getDocument(ctx, id, function(err, post) {
+
+      if (err) { Configuration.onPrismicError(err); return; }
 
        // Retrieve the related products
        Helpers.getDocuments(ctx,
@@ -54,7 +58,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, Animations, PreviewToo
          }).filter(function(link) { return link; })).value(), 
 
          // Then
-         function(relatedProducts) {
+         function(err, relatedProducts) {
+
+            if (err) { Configuration.onPrismicError(err); return; }
 
            // Retrieve the related posts
            Helpers.getDocuments(ctx,
@@ -67,7 +73,9 @@ function($, _, Backbone, Prismic, Helpers, Configuration, Animations, PreviewToo
              }).filter(function(link) { return link; })).value(), 
 
              // Then
-             function(relatedPosts) {
+             function(err, relatedPosts) {
+
+                if (err) { Configuration.onPrismicError(err); return; }
 
                $('.main').html(
                  Templates.PostDetail({
