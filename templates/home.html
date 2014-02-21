@@ -12,7 +12,7 @@
 
     <% _.each(_.keys(categories), function(category) { %>
       <ul>
-        <% _.chain(products).filter(function(p) { return _(p.tags).contains(category); }).filter(function(p) { return !_(p.tags).contains("Featured"); }).take(5).map(function(product) { %>
+        <% _.chain(products.results).filter(function(p) { return _(p.tags).contains(category); }).filter(function(p) { return !_(p.tags).contains("Featured"); }).take(5).map(function(product) { %>
           <li data-category="<%= category %>">
             <a href="<%= ctx.linkResolver(ctx, product) %>">
               <img src="<%= product.getImageView('product.image', 'icon').url %>">
@@ -34,7 +34,7 @@
 
 <section id="featured">
 
-  <% _.chain(featured).filter(function(p) { return p.type != 'blog-post'; }).take(3).map(function(doc) { %>
+  <% _.chain(featured.results).filter(function(p) { return p.type != 'blog-post'; }).take(3).map(function(doc) { %>
 
     <% if(doc.type == 'product') { %> 
       <div style="background-image: url(<%= doc.getImageView('product.gallery', 'squared').url %>)">
@@ -62,7 +62,7 @@
 
 </section>
 
-<% _.chain(featured).filter(function(p) { return p.type == 'blog-post'; }).take(1).map(function(post) { %>
+<% _.chain(featured.results).filter(function(p) { return p.type == 'blog-post'; }).take(1).map(function(post) { %>
   
   <section id="blog">
 
